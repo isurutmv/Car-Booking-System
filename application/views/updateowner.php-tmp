@@ -1,0 +1,105 @@
+<?php include 'headerform.php';?>
+<?php
+foreach ($ownerdata->result() as $row) {
+
+	$id        = $row->OID;
+	$name      = $row->Name;
+	$nic       = $row->NIC;
+	$address   = $row->Address;
+	$telephone = $row->Telephone;
+	$account   = $row->Account;
+	$munth     = $row->munth;
+	$km        = $row->km;
+	$ratehour  = $row->rate_hour;
+	$kmlimit   = $row->kmlimit;
+
+}
+?>
+
+<div id="content">
+  <div id="content-header">
+    <div id="breadcrumb"> <a href="<?php echo base_url('admin/dashboard');?>" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="<?php echo base_url('admin/owners');?>" class="tip-bottom">Owner</a> <a href="#" class="current">Update Owner</a> </div>
+    <h1>Add New Owner</h1>
+  </div>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span6">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+            <h5>Personal-info</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <form action="<?php echo base_url('insert/insertowner')?>" method="POST" class="form-horizontal">
+              <div class="control-group">
+                <label class="control-label">OID :</label>
+                <div class="controls">
+                  <input type="text" class="span11" value="<?php echo $id;?>" placeholder="Name" name="oid" />
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Name :</label>
+                <div class="controls">
+                  <input type="text" class="span11"  value="<?php echo $name;?>" placeholder="Name" name="name" />
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">NIC :</label>
+                <div class="controls">
+                  <input type="text" class="span11" value="<?php echo $nic;?>" placeholder="NIC" name="nic" />
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Address :</label>
+                <div class="controls">
+                  <input type="text" class="span11" value="<?php echo $address;?>" placeholder="Address" name="address" />
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Telephone :</label>
+                <div class="controls">
+                  <input type="text" class="span11" value="<?php echo $telephone;?>" placeholder="Telephone" name="telephone" />
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Account Number :</label>
+                <div class="controls">
+                  <input type="text" class="span11" value="<?php echo $account;?>" placeholder="Account Number" name="account" />
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Rate Per Month :</label>
+                <div class="controls">
+                  <input type="text" class="span11" value="<?php echo $munth;?>" placeholder="Rate Per Month" name="ratemonth" />
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Rate Per Km :</label>
+                <div class="controls">
+                  <input type="text" class="span11" value="<?php echo $km;?>" placeholder="Rate Per Km" name="ratekm" />
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Rate Per Hour :</label>
+                <div class="controls">
+                  <input type="text" class="span11" value="<?php echo $ratehour;?>" placeholder="Rate Per Hour" name="ratehour" />
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">KM Limit :</label>
+                <div class="controls">
+                  <input type="text" class="span11" value="<?php echo $kmlimit;?>" placeholder="KM Limit" name="kmlimit" />
+                </div>
+              </div>
+
+
+              <div class="form-actions">
+                <button type="submit"  class="btn btn-primary" name="update" value="update">Update</button>
+      <button type="submit" align:right;  class="btn btn-danger" name="delete" value="delete">Delete</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+<?php include 'footerform.php';?>

@@ -1,0 +1,98 @@
+<?php include 'headerform.php'; ?>
+ <?php
+foreach($vehicaldata->result() as $row){
+
+       $id=$row->VID;
+       $vehicalnumber=$row->vehical_number;
+       $owner=$row->owner;
+       $vehicalname=$row->vehical_name;
+       $rateday=$row->rate_per_day;
+       $ratekm=$row->rate_per_km;
+       $ratehour=$row->rate_per_hour;
+}
+?>
+
+<div id="content">
+  <div id="content-header">
+    <div id="breadcrumb"> <a href="<?php echo base_url('admin/dashboard');?>" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="<?php echo base_url('admin/vehicals');?>" class="tip-bottom">Vehicals</a> <a href="#" class="current">Update Vehical</a> </div>
+    <h1>Add New Vehical</h1>
+  </div>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span6">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+            <h5>Vehical-info</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <form action="<?php echo base_url('insert/insertvehical') ?>" method="POST" class="form-horizontal">
+
+              <div class="control-group">
+                <label class="control-label">VID :</label>
+                <div class="controls">
+                  <input type="text" class="span11" value="<?php echo $id; ?>" name="vid"  placeholder="VID" />
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Vehical Number :</label>
+                <div class="controls">
+                  <input type="text" class="span11" value="<?php echo $vehicalnumber; ?>" name="vehicalnumber" placeholder="Vehical Number" />
+                </div>
+              </div>
+               <div class="control-group">
+                <label class="control-label">Owner</label>
+                <div class="controls">
+                  <select name="ownername" >
+                    <option><?php echo $owner; ?></option>
+                    <?php
+
+            
+
+                foreach($fetch_owner->result() as $row)
+                {
+                 ?>    
+                        <option><?php echo $row->Name; ?></option>
+
+                <?php  
+                }
+            
+
+             ?>
+           </select>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Vehical Name :</label>
+                <div class="controls">
+                  <input type="text" class="span11" value="<?php echo $vehicalname; ?>" name="vehicalname" placeholder="Last name" />
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Rate Per Day :</label>
+                <div class="controls">
+                  <input type="text" class="span11" value="<?php echo $rateday; ?>" name="rateday" placeholder="First name" />
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Rate Per Hour :</label>
+                <div class="controls">
+                  <input type="text" class="span11" value="<?php echo $ratekm; ?>" name="ratehour" placeholder="Last name" />
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Rate Per KM :</label>
+                <div class="controls">
+                  <input type="text" class="span11" value="<?php echo $ratehour; ?>" name="ratekm" placeholder="First name" />
+                </div>
+              </div>
+              
+              <div class="form-actions">
+                <button type="submit"  class="btn btn-primary" name="update" value="update">Update</button>
+      <button type="submit" align:right;  class="btn btn-danger" name="delete" value="delete">Delete</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+<?php include 'footerform.php'; ?>

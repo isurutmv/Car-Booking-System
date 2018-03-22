@@ -1,0 +1,99 @@
+<?php
+
+class admin extends CI_Controller {
+
+	public function dashboard() {
+		$this->load->model("model_fetch");
+		$data["fetch_todaybooking"]    = $this->model_fetch->fetch_todaybooking();
+		$data["fetch_tomorrowbooking"] = $this->model_fetch->fetch_tomorrowbooking();
+		$data["fetch_tour"]            = $this->model_fetch->fetch_tour();
+		$this->load->view('dashboard', $data);
+	}
+	public function payments() {
+		$this->load->view('payments');
+	}
+	public function owners() {
+		$this->load->model("model_fetch");
+		$data["fetch_owner"] = $this->model_fetch->fetch_owner();
+		$this->load->view('owners', $data);
+	}
+	public function vehicals() {
+		$this->load->model("model_fetch");
+		$data["fetch_vehical"] = $this->model_fetch->fetch_vehical();
+		$this->load->view('vehicals', $data);
+	}
+	public function tours() {
+		$this->load->model("model_fetch");
+		$data["tourhistory"] = $this->model_fetch->tourhistory();
+		$this->load->view('tours', $data);
+	}
+	public function report() {
+		$this->load->view('reports');
+	}
+	public function map() {
+		$this->load->view('map');
+	}
+	public function users() {
+		$this->load->view('users');
+	}
+	public function booking() {
+		$this->load->model("model_fetch");
+		$data["fetch_booking"]  = $this->model_fetch->fetch_booking();
+		$data["fetch_hbooking"] = $this->model_fetch->fetch_hbooking();
+		$this->load->view('booking', $data);
+	}
+	public function newbooking() {
+		$this->load->model("model_fetch");
+		$data["fetch_vehical"] = $this->model_fetch->fetch_vehical();
+		$this->load->view('newbooking', $data);
+	}
+	public function newowner() {
+		$this->load->view('newowner');
+	}
+	public function newvehical() {
+		$this->load->model("model_fetch");
+		$data["fetch_owner"] = $this->model_fetch->fetch_owner();
+		$this->load->view('newvehical', $data);
+	}
+	public function newtour() {
+		$this->load->model("model_fetch");
+		$data["fetch_vehical"] = $this->model_fetch->fetch_vehical();
+
+		$this->load->view('newtour', $data);
+	}
+	public function updateowner() {
+
+		$ownerid = $this->uri->segment(3);
+		$this->load->model("model_fetch");
+		$data["ownerdata"] = $this->model_fetch->updateowner($ownerid);
+		$this->load->view('updateowner', $data);
+
+	}
+	public function updatevehical() {
+
+		$ownerid = $this->uri->segment(3);
+		$this->load->model("model_fetch");
+		$data["fetch_owner"] = $this->model_fetch->fetch_owner();
+		$data["vehicaldata"] = $this->model_fetch->updatevehical($ownerid);
+		$this->load->view('updatevehical', $data);
+
+	}
+	public function updatebooking() {
+
+		$ownerid = $this->uri->segment(3);
+		$this->load->model("model_fetch");
+		$data["bookingdata"]   = $this->model_fetch->updatebooking($ownerid);
+		$data["fetch_vehical"] = $this->model_fetch->fetch_vehical();
+		$this->load->view('updatebooking', $data);
+
+	}
+	public function takebooking() {
+		$ownerid = $this->uri->segment(3);
+		$this->load->model("model_fetch");
+		$data["updatetour2"]   = $this->model_fetch->updatetour2($ownerid);
+		$data["fetch_vehical"] = $this->model_fetch->fetch_vehical();
+
+		$this->load->view('takebooking', $data);
+
+	}
+}

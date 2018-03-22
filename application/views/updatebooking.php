@@ -1,0 +1,146 @@
+<?php include 'headerform.php'; ?>
+<?php
+foreach($bookingdata->result() as $row){
+
+                  $id=$row->BID;
+                  $vehicalnumber=$row->vehical_number;
+                            $bookingdate=$row->booking_date;
+                            $enddate=$row->end_date;
+                            $billnumber=$row->bill_number;
+                            $bookingtime=$row->booking_time;
+                            $duration=$row->duration;
+                            $telephone=$row->telephone;
+                            $nic=$row->NIC;
+                            $name=$row->name;
+}
+?>
+
+<div id="content">
+
+  <div id="content-header">
+    <div id="breadcrumb"> <a href="<?php echo base_url('admin/dashboard');?>" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="<?php echo base_url('admin/booking');?>" class="tip-bottom">Booking</a> <a href="#" class="current">UpdateBooking</a> </div>
+    <h1>Update Booking</h1>
+  </div>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span6">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+            <h5>Personal-info</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <?php
+
+   if($this->session->flashdata('error')){
+       echo "<div class='alert alert-danger' role='alert'>".$this->session->flashdata('error'); " </div>";
+   }
+
+
+   ?>
+            <form action="<?php echo base_url('insert/insertbooking') ?>" method="POST" class="form-horizontal">
+              <div class="control-group">
+                <label class="control-label">BID :</label>
+                <div class="controls">
+                  <input type="text" class="span11" value="<?php echo $id; ?>" placeholder="Duration" name="bid"  id="bid" />
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Vehical Number</label>
+                <div class="controls">
+                  <select name="vehicalnumber" >
+                    <option selected="selected"><?php echo $vehicalnumber; ?></option>
+                    <?php
+
+            
+
+               
+                foreach($fetch_vehical->result() as $row)
+                {
+                 ?>    
+                        <option><?php echo $row->vehical_number; ?></option>
+
+                <?php  
+                }
+            
+
+             ?>
+                  </select>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Booking Date :</label>
+                <div class="controls">
+                  <input type="text" class="span11" value="<?php echo $bookingdate; ?>" onchange="cal()" placeholder="yyy-mm-dd"  name="date" id="date" />
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">End Date :</label>
+                <div class="controls">
+                  <input type="text" class="span11" value="<?php echo $enddate; ?>" onchange="cal()" placeholder="yyy-mm-dd"  name="date2" id="date2" />
+                </div>
+              </div>
+              <script type="text/javascript">
+        function GetDays(){
+                var dropdt = new Date(document.getElementById("date2").value);
+                var pickdt = new Date(document.getElementById("date").value);
+                return parseInt((dropdt - pickdt) / (24 * 3600 * 1000));
+        }
+
+        function cal(){
+        if(document.getElementById("date2")){
+            document.getElementById("duration").value=GetDays();
+        }  
+    }
+  </script>
+
+              <div class="control-group">
+                <label class="control-label">Duration :</label>
+                <div class="controls">
+                  <input type="text" class="span11"  placeholder="Duration" name="duration" value="<?php echo $duration; ?>"  id="duration" />
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Bill Number:</label>
+                <div class="controls">
+                  <input type="text" class="span11" value="<?php echo $billnumber; ?>" name="billnumber" placeholder="Bill Number" />
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Time :</label>
+                <div class="controls">
+                  <input type="text" class="span11"  placeholder="Time" name="time" id="time" />
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">NIC :</label>
+                <div class="controls">
+                  <input type="text" class="span11" value="<?php echo $nic; ?>" name="nic" placeholder="NIC" />
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Telephone Number:</label>
+                <div class="controls">
+                  <input type="text" class="span11" value="<?php echo $telephone; ?>" name="telephone" placeholder="Telephone" />
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Name :</label>
+                <div class="controls">
+                  <input type="text" class="span11" value="<?php echo $name; ?>" name="name" placeholder="Name" />
+                </div>
+              </div>
+
+              
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary"  value="update" name="update">Update</button>
+      <button type="submit" class="btn btn-warning"  value="tour" name="tour">Take Tour</button>
+     
+      <button type="submit" class="btn btn-danger"  value="delete" name="delete">delete</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+<?php include 'footerform.php'; ?>

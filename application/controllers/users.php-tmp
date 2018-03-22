@@ -1,0 +1,48 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: isuru
+ * Date: 9/22/2017
+ * Time: 1:17 PM
+ */
+
+class users extends CI_Controller {
+
+	public function login() {
+
+		$this->form_validation->set_rules('username', 'Username', 'required');
+		$this->form_validation->set_rules('password', 'Password', 'required');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->load->view('login');
+		} else {
+
+			$this->load->model('model_user');
+			$result = $this->model_user->loging();
+
+			if ($result != false) {
+				$user_data = array(
+
+					'username' => $result->username,
+					'loggedin' => TRUE
+				);
+
+				$this->session->set_userdata($user_data);
+				redirect('admin/dashboard');
+			} else {
+				$this->session->set_flashdata('msg', 'Invalid username or password');
+				redirect('Welcome');
+			}
+
+		}
+
+	}
+
+	public function loggout() {
+
+		$this->session->unset_userdata('username');
+		$this->session->unset_userdata('loggedin');
+		redirect('welcome');
+	}
+
+}

@@ -1,0 +1,129 @@
+<?php
+
+
+class model_insert extends CI_Model{
+
+    public function insertowner($data)
+    {
+       $this->db->insert("owner",$data);
+    }
+ public function insertvehical($data)
+    {
+       $this->db->insert("vehicals",$data);
+    }
+    public function inserttour($data)
+    {
+       $this->db->insert("ongoing_tour",$data);
+    }
+    public function insertbooking($data)
+    {
+       $this->db->where('vehical_number',$data['vehical_number']);
+        
+        $respond = $this->db->get('ongoing_booking');
+
+        if($respond->num_rows()>0){
+
+          foreach ($respond->result() as $row)
+				{
+				        $enddate= $row->end_date;
+				        $bookingtime= $row->booking_time;
+				        $bookingdate=$row->booking_date;
+
+
+				        if(($enddate>$data['booking_date']) && ($bookingdate<$data['booking_date'])) 
+				{
+					$status='not';
+					
+				}
+				else if (($enddate==$data['booking_date'])){
+
+					if($bookingtime>$data['booking_time']){
+
+						$status='not';
+					}
+        }
+       else if (($bookingdate==$data['booking_date'])){
+
+          if($bookingtime<=$data['booking_time']){
+
+            $status='not';
+          }
+
+
+
+				}
+				if($status=='not')
+				{
+          $this->session->set_flashdata('error','This Vehical Already booking');
+					redirect(base_url()."admin/newbooking");
+				}
+				else{
+					$this->db->insert("ongoing_booking",$data);
+				}
+				}
+				
+					
+
+        }
+        else{
+
+        	$this->db->insert("ongoing_booking",$data);
+        }
+
+        
+
+				
+    }
+
+     public function updateowner($data,$id)
+    {
+       $this->db->where("OID",$id);
+       $this->db->update("owner",$data);
+    }
+    public function deleteowner($id)
+    {
+       $this->db->where("OID",$id);
+       $this->db->delete("owner");
+    }
+    public function updatevehical($data,$id)
+    {
+       $this->db->where("VID",$id);
+       $this->db->update("vehicals",$data);
+    }
+    public function deletevehical($id)
+    {
+       $this->db->where("VID",$id);
+       $this->db->delete("vehicals");
+    }
+    public function updatebooking($data,$id)
+    {
+       $this->db->where("BID",$id);
+       $this->db->update("ongoing_booking",$data);
+    }
+    public function deletebooking($id)
+    {
+       $this->db->where("BID",$id);
+       $this->db->delete("ongoing_booking");
+    }
+    public function taketour($data,$id)
+    {
+       $this->db->insert("booking_history",$data);
+       $this->db->where("BID",$id);
+       $this->db->delete("ongoing_booking");
+       
+    }
+    public function tourhistory($data,$id)
+    {
+       $this->db->insert("history_tour",$data);
+       $this->db->where("TID",$id);
+       $this->db->delete("ongoing_tour");
+       
+    }
+    public function endtour($data,$id)
+    {
+       $this->db->insert("booking_history",$data);
+       $this->db->where("BID",$id);
+       $this->db->delete("ongoing_tour");
+       
+    }
+}

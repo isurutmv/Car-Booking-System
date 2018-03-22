@@ -1,0 +1,211 @@
+<?php
+
+/**
+ *
+ */
+class insert extends CI_Controller {
+
+	public function insertowner() {
+		$this->form_validation->set_rules('name', 'Name', 'required');
+		$this->form_validation->set_rules('nic', 'NIC', 'required|min_length[10]|max_length[10]');
+		$this->form_validation->set_rules('address', 'Address', 'required');
+		$this->form_validation->set_rules('telephone', 'Telephone', 'required|min_length[10]|max_length[100]');
+
+		if ($this->form_validation->run()) {
+
+			$this->load->model('model_insert');
+
+			$data = array(
+
+				'Name'      => $this->input->post("name"),
+				'NIC'       => $this->input->post("nic"),
+				'Address'   => $this->input->post("address"),
+				'Telephone' => $this->input->post("telephone"),
+				'Account'   => $this->input->post("account"),
+				'munth'     => $this->input->post("ratemonth"),
+				'km'        => $this->input->post("ratekm"),
+				'rate_hour' => $this->input->post("ratehour"),
+				'kmlimit'   => $this->input->post("kmlimit")
+
+			);
+
+			if ($this->input->post("submit")) {
+				$this->model_insert->insertowner($data);
+				redirect(base_url()."admin/owners");
+			}
+			if ($this->input->post("update")) {
+				$this->model_insert->updateowner($data, $this->input->post("oid"));
+				redirect(base_url()."admin/owners");
+			}
+			if ($this->input->post("delete")) {
+				$this->model_insert->deleteowner($this->input->post("oid"));
+				redirect(base_url()."admin/owners");
+			}
+
+		} else {
+			$this->load->view('admin/insertowner');
+		}
+
+	}
+	public function insertvehical() {
+		$this->form_validation->set_rules('vehicalnumber', 'Vehical Number', 'required');
+		$this->form_validation->set_rules('ownername', 'Owner Name', 'required');
+		$this->form_validation->set_rules('vehicalname', 'Vehical Name', 'required');
+		$this->form_validation->set_rules('rateday', 'Rate per Day', 'required');
+		$this->form_validation->set_rules('ratehour', 'Rate Per Hour', 'required');
+		$this->form_validation->set_rules('ratekm', 'Rate Per Km', 'required');
+
+		if ($this->form_validation->run()) {
+
+			$this->load->model('model_insert');
+
+			$data = array(
+
+				'vehical_number' => $this->input->post("vehicalnumber"),
+				'owner'          => $this->input->post("ownername"),
+				'vehical_name'   => $this->input->post("vehicalname"),
+				'rate_per_day'   => $this->input->post("rateday"),
+				'rate_per_km'    => $this->input->post("ratekm"),
+				'rate_per_hour'  => $this->input->post("ratehour"),
+
+			);
+
+			if ($this->input->post("submit")) {
+				$this->model_insert->insertvehical($data);
+				redirect(base_url()."admin/vehicals");
+			}
+
+			if ($this->input->post("update")) {
+				$this->model_insert->updatevehical($data, $this->input->post("vid"));
+				redirect(base_url()."admin/vehicals");
+			}
+			if ($this->input->post("delete")) {
+				$this->model_insert->deletevehical($this->input->post("vid"));
+				redirect(base_url()."admin/vehicals");
+			}
+
+		} else {
+			$this->load->view('admin/insertvehical');
+		}
+
+	}
+
+	public function insertbooking() {
+		$this->form_validation->set_rules('vehicalnumber', 'Vehical Number', 'required');
+		$this->form_validation->set_rules('date', 'Booking Date', 'required');
+		$this->form_validation->set_rules('date2', 'End Date', 'required');
+		$this->form_validation->set_rules('billnumber', 'Bill Number', 'required');
+		$this->form_validation->set_rules('time', 'Time', 'required');
+		$this->form_validation->set_rules('name', 'Name', 'required');
+		$this->form_validation->set_rules('telephone', 'Telephone', 'required');
+		$this->form_validation->set_rules('nic', 'NIC', 'required');
+
+		if ($this->form_validation->run()) {
+
+			$this->load->model('model_insert');
+
+			$data = array(
+
+				'vehical_number' => $this->input->post("vehicalnumber"),
+				'booking_date'   => $this->input->post("date"),
+				'end_date'       => $this->input->post("date2"),
+				'bill_number'    => $this->input->post("billnumber"),
+				'booking_time'   => $this->input->post("time"),
+				'duration'       => $this->input->post("duration"),
+				'telephone'      => $this->input->post("telephone"),
+				'NIC'            => $this->input->post("nic"),
+				'name'           => $this->input->post("name"),
+
+			);
+			if ($this->input->post("submit")) {
+				$this->model_insert->insertbooking($data);
+				redirect(base_url()."admin/booking");
+			}
+			if ($this->input->post("update")) {
+				$this->model_insert->updatebooking($data, $this->input->post("bid"));
+				redirect(base_url()."admin/booking");
+			}
+			if ($this->input->post("delete")) {
+				$this->model_insert->deletebooking($this->input->post("bid"));
+				redirect(base_url()."admin/booking");
+			}
+			if ($this->input->post("tour")) {
+				$this->model_insert->taketour($data, $this->input->post("bid"));
+				redirect(base_url()."admin/booking");
+			}
+			if ($this->input->post("end")) {
+				$this->model_insert->endtour($data, $this->input->post("bid"));
+				redirect(base_url()."admin/booking");
+			}
+
+		} else {
+			$this->load->view('admin/insertbooking');
+		}
+
+	}
+	public function inserttour() {
+
+		$this->load->model('model_insert');
+
+		$data = array(
+
+			'dname'      => $this->input->post("dname"),
+			'dnic'       => $this->input->post("dnic"),
+			'dlicence'   => $this->input->post("dlicence"),
+			'dtelephone' => $this->input->post("dtelephone"),
+			'gname'      => $this->input->post("gname"),
+			'gnic'       => $this->input->post("gnic"),
+			'gaddress'   => $this->input->post("gaddress"),
+
+			'gtelephone' => $this->input->post("gtelephone"),
+			'vehical'    => $this->input->post("vehicalnumber"),
+			'sdate'      => $this->input->post("date"),
+			'edate'      => $this->input->post("date2"),
+			'duration'   => $this->input->post("duration"),
+			'bill'       => $this->input->post("billnumber"),
+			'time'       => $this->input->post("time"),
+			'payment'    => $this->input->post("fpayment"),
+			'smeeter'    => $this->input->post("smeeter")
+
+		);
+
+		$this->model_insert->inserttour($data);
+		redirect(base_url()."admin/dashboard");
+
+	}
+	public function inserttourhistory() {
+
+		$this->load->model('model_insert');
+
+		$data = array(
+
+			'dname'      => $this->input->post("dname"),
+			'dnic'       => $this->input->post("dnic"),
+			'dlicence'   => $this->input->post("dlicence"),
+			'dtelephone' => $this->input->post("dtelephone"),
+			'gname'      => $this->input->post("gname"),
+			'gnic'       => $this->input->post("gnic"),
+			'gaddress'   => $this->input->post("gaddress"),
+
+			'gtelephone' => $this->input->post("gtelephone"),
+			'vehical'    => $this->input->post("vehicalnumber"),
+			'sdate'      => $this->input->post("date"),
+			'edate'      => $this->input->post("date2"),
+			'duration'   => $this->input->post("duration"),
+			'bill'       => $this->input->post("billnumber"),
+			'time'       => $this->input->post("time"),
+			'payment'    => $this->input->post("fpayment"),
+			'endate'     => $this->input->post("date3"),
+			'etime'      => $this->input->post("time2"),
+			'endmeeter'  => $this->input->post("endmeeter"),
+			'adpay'      => $this->input->post("apayment"),
+			'smeeter'    => $this->input->post("smeeter")
+
+		);
+
+		$this->model_insert->tourhistory($data, $this->input->post("TID"));
+		redirect(base_url()."admin/tours");
+
+	}
+
+}
